@@ -50,7 +50,7 @@ Because this is a React Native project, a single TypeScript codebase deploys nat
 
 ### 📁 Project Structure
 ```text
-LifeAI_Project/
+Life AI Coach/
  ├── android/       <-- Android Studio uses this folder to build the native .apk
  ├── ios/           <-- Xcode uses this folder to build the native .ipa
  ├── src/           <-- Core UI & Logic (Your shared JS/TypeScript workspace)
