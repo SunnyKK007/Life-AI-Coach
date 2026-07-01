@@ -1,75 +1,259 @@
-🏥 Virtual DPP Platform (Fruit Street Clone) — Master Engineering Specification
-System Class: Multi-Tenant HIPAA-Compliant Protected Health Information (PHI) & Financial Claims Processing System.Deployment Architecture: Isolated AWS VPC, Private Subnet Relational Tier, Managed Automated Queue Framework.
---------------------
-🛠️ Section 1: Core System Architecture & Technology Stack
+# 🏥 Virtual DPP Platform (Fruit Street Clone) — Master Engineering Specification
+> **System Class:** Multi-Tenant HIPAA-Compliant Protected Health Information (PHI) & Financial Claims Processing System.
+> **Deployment Architecture:** Isolated AWS VPC, Private Subnet Relational Tier, Managed Automated Queue Framework.
+
+---
+
+## 🛠️ Section 1: Core System Architecture & Technology Stack
+
 This system is built with a decoupled architecture designed to segregate sensitive clinical data and handle high-throughput background processing safely.
-1.1 Backend Engine & Data Layer
-• Core Application Server: NestJS (TypeScript) following strict domain-driven module structuring (AuthModule, BillingModule, CurriculumModule, ClinicalModule, DeviceSyncModule). NestJS ensures structured dependency injection, critical for injecting varying financial billing strategies at runtime.
-• Database & Database Access Tier: PostgreSQL on AWS RDS locked within a private security isolation group subnet with storage volume encryption enabled at rest via AWS KMS (AES-256). Structural migrations and type-safe data access are executed through Prisma ORM.
-• Asynchronous Processing Layer: Redis + BullMQ handles heavy operations (e.g., compiling EDI claims data streams, managing third-party webhook ingestions, processing food image payloads) outside the client request-response lifecycle.
-1.2 Frontend & Mobile Implementations
-• Member Mobile Application: React Native (TypeScript) utilizing NativeWind (Tailwind CSS engine) to maximize cross-platform engine consistency. This client manages real-time Bluetooth device scanning, media logging, and synchronous video streams.
-• Clinical Provider Workspace Dashboard: Next.js (App Router) utilizing Tailwind CSS + Shadcn UI. This interface functions as a dedicated electronic chart workstation for Registered Dietitians (RDs) and administrative billers.
-1.3 Security, Privacy & Regulatory Compliance
-• Access Control: Centralized identity provider verification configured through Auth0 or AWS Cognito enforcing JSON Web Tokens (JWT) signed with asymmetric RS256 algorithms.
-• Data Isolation: Enforced directly via PostgreSQL Row-Level Security (RLS) policies to ensure clinicians can only view records belonging to explicitly assigned members.
-• Transmission Security: TLS 1.3 enforced across all public and internal API endpoints.
---------------------
-🔄 Section 2: The Closed-Loop System Blueprint
-The interactive architecture diagram below outlines the dynamic telemetry data paths connecting all 5 delivery phases inside the system.
-graph TD %% Transparent Box & Arrow Wireframe Styling classDef default fill:none,stroke-width:1px; classDef loopStyle stroke:#005a9c,stroke-width:2px; %% Elements Configuration subgraph Enrollment_Gate [Phase 1: Clinical Gate & Ingestion] P1[Feature 10: B2C Intake Portal] --> P2[Feature 9: Card Ingestion Engine] P2 --> P3[Feature 11: Active Eligibility Router] P3 --> P4[Feature 8: LabCorp Result Gateway] P4 --> P5[Feature 1: 26-Week Time-Lock Player] end subgraph Care_Delivery [Phase 2: Virtual Telehealth Ecosystem] P6[Feature 17: Cohort State Clusterer] --> P7[Feature 2: Multi-Tenant RD Workstation] P7 --> P8[Feature 16: Zoom Healthcare SDK Frame] P8 --> P9[Feature 15: Encrypted WebSocket Chat] end subgraph Finance_Engine [Phase 3: Outcome Claims Monetization] P10[Feature 18: Aggregated Metric Dashboards] --> P11[Feature 14: Automated EDI 837P Compiler] P11 --> P12[Feature 12: Medicare G-Code Tracker] P12 --> P13[Feature 13: Medicaid State Strategy Hub] end subgraph Engagement_Layer [Phase 4: Behavioral Optimization] P14[Feature 4: AI Computer Vision Food Log] --> P15[Feature 5: RD Clinical Triage Review Queue] P15 --> P16[Feature 3: Habit Commits Dashboard] P16 --> P17[Feature 19: Background FCM/APNs Nudges] end subgraph Edge_Hardware [Phase 5: Peripheral Hardware Sync] P18[Feature 6: Local Bluetooth BLE Driver] --> P19[Feature 7: OS HealthKit / Connect Sync] P19 --> P20[Feature 20: Modify Health Delivery Webhook] P20 --> P21[Feature 21: 12-Month Guarantee Evaluator] end %% Closed-Loop Direct Cross-Phase Dependencies P4 -->|If HbA1c 5.7%-6.4% -> Activate Account| P6 P8 -->|Attendance Metrics & Webhooks| P11 P13 -->|Provides Capital Offsets| P14 P19 -->|Asynchronous Data Pipelines| P14 P21 -->|CRITICAL LOOP: 5% Weight Loss Hit -> Fire G9884 Code| P11 P21 -->|Real-time Clinical Escalation Event| P7 %% Highlight Loop Components class P18,P19,P20,P21 loopStyle;
---------------------
-📅 Section 3: Deep-Dive Feature Specification (All 21 Features)
-📌 Phase 1: Onboarding, Eligibility & The Clinical Gate
-Feature 10: Direct B2C Consumer Access
-• Functional Specification: A public-facing onboarding interface enabling individual sign-ups without an employer contract, sponsor token, or physician referral.
-• Tech Stack Components: Next.js (Web), React Native (Mobile), NestJS AuthModule.
-• Implementation Steps:
-    1. Expose an un-gated endpoint POST /api/v1/onboarding/register.
+
+### 1.1 Backend Engine & Data Layer
+* **Core Application Server:** **NestJS (TypeScript)** following strict domain-driven module structuring (`AuthModule`, `BillingModule`, `CurriculumModule`, `ClinicalModule`, `DeviceSyncModule`). NestJS ensures structured dependency injection, critical for injecting varying financial billing strategies at runtime.
+* **Database & Database Access Tier:** **PostgreSQL on AWS RDS** locked within a private security isolation group subnet with storage volume encryption enabled at rest via AWS KMS (AES-256). Structural migrations and type-safe data access are executed through **Prisma ORM**.
+* **Asynchronous Processing Layer:** **Redis + BullMQ** handles heavy operations (e.g., compiling EDI claims data streams, managing third-party webhook ingestions, processing food image payloads) outside the client request-response lifecycle.
+
+### 1.2 Frontend & Mobile Implementations
+* **Member Mobile Application:** **React Native (TypeScript)** utilizing **NativeWind** (Tailwind CSS engine) to maximize cross-platform engine consistency. This client manages real-time Bluetooth device scanning, media logging, and synchronous video streams.
+* **Clinical Provider Workspace Dashboard:** **Next.js (App Router)** utilizing **Tailwind CSS + Shadcn UI**. This interface functions as a dedicated electronic chart workstation for Registered Dietitians (RDs) and administrative billers.
+
+### 1.3 Security, Privacy & Regulatory Compliance
+* **Access Control:** Centralized identity provider verification configured through **Auth0 or AWS Cognito** enforcing JSON Web Tokens (JWT) signed with asymmetric RS256 algorithms.
+* **Data Isolation:** Enforced directly via PostgreSQL **Row-Level Security (RLS)** policies to ensure clinicians can only view records belonging to explicitly assigned members.
+* **Transmission Security:** TLS 1.3 enforced across all public and internal API endpoints.
+
+---
+
+## 🔄 Section 2: The Closed-Loop System Blueprint
+
+The interactive architecture diagram below outlines the dynamic telemetry data paths connecting all 5 delivery phases inside the system. 
+
+```mermaid
+graph TD
+    %% Transparent Box & Arrow Wireframe Styling
+    classDef default fill:none,stroke-width:1px;
+    classDef loopStyle stroke:#005a9c,stroke-width:2px;
+
+    %% Elements Configuration
+    subgraph Enrollment_Gate [Phase 1: Clinical Gate & Ingestion]
+        P1[Feature 10: B2C Intake Portal] --> P2[Feature 9: Card Ingestion Engine]
+        P2 --> P3[Feature 11: Active Eligibility Router]
+        P3 --> P4[Feature 8: LabCorp Result Gateway]
+        P4 --> P5[Feature 1: 26-Week Time-Lock Player]
+    end
+
+    subgraph Care_Delivery [Phase 2: Virtual Telehealth Ecosystem]
+        P6[Feature 17: Cohort State Clusterer] --> P7[Feature 2: Multi-Tenant RD Workstation]
+        P7 --> P8[Feature 16: Zoom Healthcare SDK Frame]
+        P8 --> P9[Feature 15: Encrypted WebSocket Chat]
+    end
+
+    subgraph Finance_Engine [Phase 3: Outcome Claims Monetization]
+        P10[Feature 18: Aggregated Metric Dashboards] --> P11[Feature 14: Automated EDI 837P Compiler]
+        P11 --> P12[Feature 12: Medicare G-Code Tracker]
+        P12 --> P13[Feature 13: Medicaid State Strategy Hub]
+    end
+
+    subgraph Engagement_Layer [Phase 4: Behavioral Optimization]
+        P14[Feature 4: AI Computer Vision Food Log] --> P15[Feature 5: RD Clinical Triage Review Queue]
+        P15 --> P16[Feature 3: Habit Commits Dashboard]
+        P16 --> P17[Feature 19: Background FCM/APNs Nudges]
+    end
+
+    subgraph Edge_Hardware [Phase 5: Peripheral Hardware Sync]
+        P18[Feature 6: Local Bluetooth BLE Driver] --> P19[Feature 7: OS HealthKit / Connect Sync]
+        P19 --> P20[Feature 20: Modify Health Delivery Webhook]
+        P20 --> P21[Feature 21: 12-Month Guarantee Evaluator]
+    end
+
+    %% Closed-Loop Direct Cross-Phase Dependencies
+    P4 -->|If HbA1c 5.7%-6.4% -> Activate Account| P6
+    P8 -->|Attendance Metrics & Webhooks| P11
+    P13 -->|Provides Capital Offsets| P14
+    P19 -->|Asynchronous Data Pipelines| P14
+    P21 -->|CRITICAL LOOP: 5% Weight Loss Hit -> Fire G9884 Code| P11
+    P21 -->|Real-time Clinical Escalation Event| P7
+
+    %% Highlight Loop Components
+    class P18,P19,P20,P21 loopStyle;
+```
+
+---
+
+## 📅 Section 3: Deep-Dive Feature Specification (All 21 Features)
+
+### 📌 Phase 1: Onboarding, Eligibility & The Clinical Gate
+
+#### Feature 10: Direct B2C Consumer Access
+* **Functional Specification:** A public-facing onboarding interface enabling individual sign-ups without an employer contract, sponsor token, or physician referral.
+* **Tech Stack Components:** Next.js (Web), React Native (Mobile), NestJS `AuthModule`.
+* **Implementation Steps:**
+    1. Expose an un-gated endpoint `POST /api/v1/onboarding/register`.
     2. Collect user identification inputs (legal name, date of birth, gender, address string, email, password hashes).
-    3. Instantiate a new database record under the User model, setting the status enum field explicitly to PENDING_INSURANCE.
-Feature 9: Insurance-Native Direct Billing
-• Functional Specification: Real-time capture and validation of health insurance card information to confirm program coverage before initiating any medical services.
-• Tech Stack Components: React Native Form UI, NestJS BillingModule, Clearinghouse API Integration (Change Healthcare / Availity).
-• Implementation Steps:
-    4. Collect Plan Carrier Name, Payer ID, Member Policy ID, and Group Number via secure form fields.
-    5. Map the inputs into an official JSON-formatted EDI 270 (Eligibility Inquiry) data model structure.
-    6. Dispatch a backend secure POST request to the clearinghouse production gateway.
-Feature 11: $0 Cost Path for Insured Members
-• Functional Specification: A routing controller that automatically redirects users based on insurance status. If covered, it sets out-of-pocket costs to $0; if uncovered, it securely displays a self-pay checkout.
-• Tech Stack Components: NestJS Interceptor, Stripe Elements SDK, React Navigation.
-• Implementation Steps:
-    7. Parse the incoming asynchronous EDI 271 (Eligibility Response) payload file.
-    8. Check the response array path benefits.status_code === '1' (Active Coverage).
-    9. If true, set paymentType = PaymentType.INSURANCE and bypass paywall routing to point directly to shipping addresses.
-    10. If false, set paymentType = PaymentType.SELF_PAY and mount the Stripe payment modal interface.
-Feature 8: At-Home HbA1c Lab Testing (LabCorp Partnership)
-• Functional Specification: An automated screening mechanism that orders a home blood test kit when a user signs up, then checks the lab result to determine if they are clinically prediabetic.
-• Tech Stack Components: NestJS ClinicalModule, LabCorp Web Services Client, BullMQ Queue, Webhook Controller.
-• Implementation Steps:
-    11. Upon insurance validation, push a task onto BullMQ to send a shipping order JSON package to LabCorp's production endpoint.
-    12. Expose a secure, cryptographically signed webhook endpoint route at /api/v1/webhooks/labcorp.
-    13. On receipt of the finished lab report payload, parse the float value found in the hba1cValue field:
-        ▸ 5.7% to 6.4%: Update the status attribute to ACTIVE_PREDIABETES and unlock app access.
-        ▸ $\ge$ 6.5%: Lock account access, update status to DIABETIC_REFERRAL, and display an out-of-program clinical note.
-        ▸ < 5.7%: Lock account access and set status to INELIGIBLE.
-Feature 1: CDC-Recognized DPP Curriculum (12-Month)
-• Functional Specification: Educational module player. Hosts 26 separate, non-bingeable modules over a 12-month program. Each lesson requires a video interaction, a 3-question evaluation quiz, and an action item text input.
-• Tech Stack Components: AWS S3, CloudFront CDN, React Native Video Player, NestJS Lock Guard.
-• Implementation Steps:
-    14. Upload the 26 CDC educational video files into a private AWS S3 bucket distributed through a secure CloudFront CDN layer.
-    15. Create a custom backend controller guard (CurriculumTimeLockGuard) that calculates the absolute difference between now and the user's enrolledAt date.
-    16. Block execution requests attempting to view any module index where the calculated week is lower than the sequence index requirement.
---------------------
-📌 Phase 2: Live Telehealth & Clinician Dashboards
-Feature 2: Licensed Registered Dietitian (RD) as Primary Coach
-• Functional Specification: A provider matching pipeline and multi-tenant clinical workstation interface that lets dietitians monitor and manage only their assigned patient list.
-• Tech Stack Components: Next.js Panel UI, Prisma ORM Queries, PostgreSQL Database RLS Policies.
-• Implementation Steps:
-    17. Map an optional rdId foreign-key identifier string into the core transactional User entity model.
-    18. Apply physical Row-Level Security parameters across the underlying PostgreSQL database cluster.
-    19. Configure the Next.js query controller to fetch data using a session context string matching the logged-in RD's identity token.
-Feature 16: Live Group Video Sessions (26 Zoom Sessions / 12 Months)
+    3. Instantiate a new database record under the `User` model, setting the `status` enum field explicitly to `PENDING_INSURANCE`.
+
+#### Feature 9: Insurance-Native Direct Billing
+* **Functional Specification:** Real-time capture and validation of health insurance card information to confirm program coverage before initiating any medical services.
+* **Tech Stack Components:** React Native Form UI, NestJS `BillingModule`, Clearinghouse API Integration (Change Healthcare / Availity).
+* **Implementation Steps:**
+    1. Collect Plan Carrier Name, Payer ID, Member Policy ID, and Group Number via secure form fields.
+    2. Map the inputs into an official JSON-formatted **EDI 270 (Eligibility Inquiry)** data model structure.
+    3. Dispatch a backend secure POST request to the clearinghouse production gateway.
+
+#### Feature 11: $0 Cost Path for Insured Members
+* **Functional Specification:** A routing controller that automatically redirects users based on insurance status. If covered, it sets out-of-pocket costs to $0; if uncovered, it securely displays a self-pay checkout.
+* **Tech Stack Components:** NestJS Interceptor, Stripe Elements SDK, React Navigation.
+* **Implementation Steps:**
+    1. Parse the incoming asynchronous **EDI 271 (Eligibility Response)** payload file.
+    2. Check the response array path `benefits.status_code === '1'` (Active Coverage).
+    3. If true, set `paymentType = PaymentType.INSURANCE` and bypass paywall routing to point directly to shipping addresses.
+    4. If false, set `paymentType = PaymentType.SELF_PAY` and mount the Stripe payment modal interface.
+
+#### Feature 8: At-Home HbA1c Lab Testing (LabCorp Partnership)
+* **Functional Specification:** An automated screening mechanism that orders a home blood test kit when a user signs up, then checks the lab result to determine if they are clinically prediabetic.
+* **Tech Stack Components:** NestJS `ClinicalModule`, LabCorp Web Services Client, BullMQ Queue, Webhook Controller.
+* **Implementation Steps:**
+    1. Upon insurance validation, push a task onto BullMQ to send a shipping order JSON package to LabCorp's production endpoint.
+    2. Expose a secure, cryptographically signed webhook endpoint route at `/api/v1/webhooks/labcorp`.
+    3. On receipt of the finished lab report payload, parse the float value found in the `hba1cValue` field:
+        * **5.7% to 6.4%:** Update the status attribute to `ACTIVE_PREDIABETES` and unlock app access.
+        * **$\ge$ 6.5%:** Lock account access, update status to `DIABETIC_REFERRAL`, and display an out-of-program clinical note.
+        * **< 5.7%:** Lock account access and set status to `INELIGIBLE`.
+
+#### Feature 1: CDC-Recognized DPP Curriculum (12-Month)
+* **Functional Specification:** Educational module player. Hosts 26 separate, non-bingeable modules over a 12-month program. Each lesson requires a video interaction, a 3-question evaluation quiz, and an action item text input.
+* **Tech Stack Components:** AWS S3, CloudFront CDN, React Native Video Player, NestJS Lock Guard.
+* **Implementation Steps:**
+    1. Upload the 26 CDC educational video files into a private AWS S3 bucket distributed through a secure CloudFront CDN layer.
+    2. Create a custom backend controller guard (`CurriculumTimeLockGuard`) that calculates the absolute difference between `now` and the user's `enrolledAt` date.
+    3. Block execution requests attempting to view any module index where the calculated week is lower than the sequence index requirement.
+
+---
+
+### 📌 Phase 2: Live Telehealth & Clinician Dashboards
+
+#### Feature 2: Licensed Registered Dietitian (RD) as Primary Coach
+* **Functional Specification:** A provider matching pipeline and multi-tenant clinical workstation interface that lets dietitians monitor and manage only their assigned patient list.
+* **Tech Stack Components:** Next.js Panel UI, Prisma ORM Queries, PostgreSQL Database RLS Policies.
+* **Implementation Steps:**
+    1. Map an optional `rdId` foreign-key identifier string into the core transactional `User` entity model.
+    2. Apply physical Row-Level Security parameters across the underlying PostgreSQL database cluster.
+    3. Configure the Next.js query controller to fetch data using a session context string matching the logged-in RD's identity token.
+
+#### Feature 16: Live Group Video Sessions (26 Zoom Sessions / 12 Months)
+* **Functional Specification:** A live group video interface that lets members join their 26 scheduled telehealth cohort sessions directly within the mobile app.
+* **Tech Stack Components:** `@zoom/react-native-meeting-sdk`, Zoom Server-to-Server OAuth, NestJS Live Event Manager.
+* **Implementation Steps:**
+    1. Build an automated backend integration script that calls the Zoom meeting creation API (`POST /v2/users/{userId}/meetings`) to pre-schedule the cohort's session blocks.
+    2. Store the generated meeting keys and password strings securely inside the `Cohort` database model records.
+    3. Initialize the native mobile Zoom SDK container frame directly inside the view stack, passing down cryptographic entry signatures generated by the backend API.
+
+#### Feature 17: Group Peer Cohort Accountability
+* **Functional Specification:** Automated sorting logic that clusters verified users into closed peer cohorts of 10 to 15 members who move through the 12-month program sequence together.
+* **Tech Stack Components:** NestJS Cron Service Scheduler, PostgreSQL Transaction Scope.
+* **Implementation Steps:**
+    1. Schedule a system backend cron worker utility to scan the database tables automatically every week.
+    2. Isolate unassigned active user rows where `status === 'ACTIVE_PREDIABETES'`.
+    3. Group these profiles into a new `Cohort` row. Group users by their state of residence to ensure compliance with state-level dietitian licensing laws, and enforce a maximum cohort size of 15 records.
+
+#### Feature 15: 1-on-1 Secure Messaging with RD
+* **Functional Specification:** A real-time, encrypted text and photo messaging tool that lets members communicate asynchronously with their assigned dietitian.
+* **Tech Stack Components:** Socket.io Framework, `@nestjs/websockets`, `react-native-gifted-chat`, Web Volume Volume Encryption.
+* **Implementation Steps:**
+    1. Scaffold a real-time NestJS server gateway utilizing an authenticated secure Socket.io architecture.
+    2. Intercept inbound chat strings, encrypting the text arrays using application-layer AES-256 blocks before executing a database database save.
+    3. Sync the text payload streams directly to the provider dashboard and mobile chat views. If a recipient's connection is offline, route the message through the mobile push notification engine instead.
+
+---
+
+### 📌 Phase 3: The Financial Milestone & Tracking Architecture
+
+#### Feature 18: In-App Goal Tracking (Weight, Activity, Lessons)
+* **Functional Specification:** An analytical tracking engine that calculates progress data to power visual progress dashboards for weight trends, workout minutes, and curriculum completion.
+* **Tech Stack Components:** `victory-native` (Mobile Rendering Framework), `recharts` (Web Dashboard Graphics), NestJS Analytics API.
+* **Implementation Steps:**
+    1. Write an optimized database aggregation repository query to compute percentage weight deltas against baseline metrics and sum weekly exercise entry durations.
+    2. Expose the pre-compiled statistical outputs through an authorized data dashboard API route (`GET /api/v1/analytics/progress`).
+    3. Feed these JSON response streams directly into frontend visual charting modules.
+
+#### Feature 14: Outcomes-Based Medical Claims Billing
+* **Functional Specification:** An automated billing worker that compiles a patient's attendance and health metrics into a standard electronic claim file, sending it to the insurance clearinghouse when milestones are achieved.
+* **Tech Stack Components:** NestJS `BillingModule`, BullMQ Claim Processor, EDI Submitter Connection Interface.
+* **Implementation Steps:**
+    1. Use a standard backend event emitter to listen for verified user milestones (e.g., lesson completions or recorded weight reductions).
+    2. Queue a claim compilation job within BullMQ to assemble practitioner data, tax identifiers, ICD-10 diagnosis sequences, and user billing records.
+    3. Map this data structure into an electronic **EDI 837P (Professional Claim)** transaction string and transmit it directly to the clearinghouse API.
+
+#### Feature 12: Medicare Coverage (CMS DPP Certified)
+* **Functional Specification:** An automated validation matrix that checks program data against CMS Medicare rules and generates official government billing G-codes when specific attendance and weight milestones are hit.
+* **Tech Stack Components:** NestJS CMS Validation Rule Engine Strategy.
+* **Implementation Steps:**
+    1. Map out the official CDC National MDPP financial reimbursement rules directly within the `ClaimsRouterService` module.
+    2. Evaluate condition parameters against data rows before compiling any claims:
+        * **Module 1 Attendance Logged:** Assign and claim code `G9873`.
+        * **Module 4 Attendance Logged:** Assign and claim code `G9874`.
+        * **Module 9 Attendance Logged:** Assign and claim code `G9875`.
+        * **$\ge$ 5% Documented Loss of Weight Value:** Assign and claim code `G9884`.
+
+#### Feature 13: Medicaid Coverage
+* **Functional Specification:** A strategy routing component that adapts billing outputs to follow different state-level Medicaid fee structures and rules based on the user's location.
+* **Tech Stack Components:** NestJS Engineering Strategy Design Pattern Wrapper.
+* **Implementation Steps:**
+    1. Create a core, reusable billing strategy structure template (`IBillingStrategy`).
+    2. Write distinct strategy handlers to manage the precise variances across health networks (e.g., `FederalMedicareStrategy`, `StateMedicaidStrategy`).
+    3. Inject and run the appropriate strategy class at runtime based on the state residence field and insurance data parsed during onboarding.
+
+---
+
+### 📌 Phase 4: Automated Behavioral Engagement & AI Tools
+
+#### Feature 4: Photo-Based Food Logging with AI Food Identification
+* **Functional Specification:** A digital food diary where users snap photos of meals, and an AI service processes the image to identify the food and calculate estimated macronutrients and calories.
+* **Tech Stack Components:** React Native Camera API, AWS S3 Upload Service, Google Cloud Vision API, Nutritionix Developer API.
+* **Implementation Steps:**
+    1. Upload meal images captured on mobile devices directly to a secure, private AWS S3 bucket path using time-limited presigned URLs.
+    2. Pass the public image CDN link directly to the Google Cloud Vision API to extract descriptive object text labels.
+    3. Pass those descriptive labels to the Nutritionix API's `/v2/natural/nutrients` endpoint to fetch a structured JSON payload of estimated calories, fats, proteins, and carbohydrates. Save the resulting metrics into the `FoodLog` model.
+
+#### Feature 5: RD-Reviewed Meal Coaching (Async, Not Instant AI)
+* **Functional Specification:** An asynchronous dietitian review workflow. The AI handles calorie and nutrient calculations automatically, but the food log is queued on the dietitian's dashboard for human review and personalized text feedback.
+* **Tech Stack Components:** Next.js Queue Interface, BullMQ Notification Dispatch System.
+* **Implementation Steps:**
+    1. Include an `isReviewed` boolean flag and a `reviewComment` open text field directly inside the `FoodLog` database schema.
+    2. Fetch and display unreviewed food logs in the dietitian's Next.js web dashboard using a real-time query filter.
+    3. When the dietitian saves their review text, update the database record and trigger a background job to send an immediate push notification to the user's mobile device.
+
+#### Feature 3: Habit-Based Behavioral Coaching
+* **Functional Specification:** A goal setting tool where members choose weekly lifestyle commitments and log their progress over time using interactive check-in buttons.
+* **Tech Stack Components:** Mobile UI Interaction Checkbox, NestJS Goals Engine API.
+* **Implementation Steps:**
+    1. Create a `BehavioralGoal` database model linked to the user record to track habit targets and ongoing execution counters.
+    2. Expose an atomic counter update API endpoint path (`PATCH /api/v1/goals/:id/increment`).
+    3. Bind this route directly to the interactive checkbox elements within the mobile application layout.
+
+#### Feature 19: Push Notifications & Behavioral Nudges
+* **Functional Specification:** An automated retention engine. Detects lapses in user engagement and schedules targeted reminders for missing meal logs, low step counts, or upcoming live cohort sessions.
+* **Tech Stack Components:** Firebase Cloud Messaging (FCM), Apple Push Notification Service (APNs), NestJS Task Scheduler Engine.
+* **Implementation Steps:**
+    1. Initialize the push notification SDK connections on mobile devices, securely saving each device's token to the backend user record.
+    2. Configure background cron monitoring scripts using the NestJS `@Schedule` utility framework.
+    3. Set up the morning cron script to find inactive accounts (e.g., users who haven't logged a weight reading in $\ge$ 5 days) and send targeted push reminders through the FCM/APNs APIs.
+
+---
+
+### 📌 Phase 5: Hardware Sync & Ecosystem Add-ons
+
+#### Feature 6: Smart Scale Sync
+* **Functional Specification:** Automated weight tracking that lets members log weight manually or pair a smart scale over Bluetooth to upload verified weight data automatically.
+* **Tech Stack Components:** `react-native-ble-plx` Controller Package, NestJS Ingestion API.
+* **Implementation Steps:**
+    1. Add an execution state parameter (`MANUAL` or `DEVICE_SYNCED`) into the `WeightLog` data schema container model.
+    2. Use the local Bluetooth LE mobile framework client to scan for, connect to, and pair with authorized smart scale hardware models.
+    3. Extract the weight value from the scale's broadcast characteristic hex array, translate it into a readable decimal format, and send the data directly to the backend API layer.
+
+#### Feature 7: Activity / Fitness Data Sync
+* **Functional Specification:** Background activity tracking that integrates directly with native iOS and Android health frameworks to sync daily step counts and workout minutes automatically.
+* **Tech Stack Components:** `react-native-heaFeature 16: Live Group Video Sessions (26 Zoom Sessions / 12 Months)
 • Functional Specification: A live group video interface that lets members join their 26 scheduled telehealth cohort sessions directly within the mobile app.
 • Tech Stack Components: @zoom/react-native-meeting-sdk, Zoom Server-to-Server OAuth, NestJS Live Event Manager.
 • Implementation Steps:
